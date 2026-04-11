@@ -1,16 +1,16 @@
 package com.codemanship;
 
-import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OrderingTest {
 
     @Test
-    void addHoldOnItem() {
+    void addHoldOnItem() throws InsufficientStockException {
         Product product = createProduct();
         Order order = createEmptyOrder();
 
@@ -20,7 +20,7 @@ public class OrderingTest {
     }
 
     @Test
-    void addingItemWithSufficientStock() {
+    void addingItemWithSufficientStock() throws InsufficientStockException {
         Product product = createProduct();
         Order order = createEmptyOrder();
 
@@ -31,8 +31,17 @@ public class OrderingTest {
         assertEquals(1, order.items().get(0).quantity());
     }
 
+    @Test
+    void addingItemWithInsufficientStock(){
+        Product product = new Product(327, 1, 0, "Ibanez Tube Screamer");
+        Order order = createEmptyOrder();
+
+        InsufficientStockException ex = assertThrows(InsufficientStockException.class, () -> order.add(product, 2));
+        assertEquals("Insufficient stock of Ibanez Tube Screamer. Only 1 currently available.", ex.getMessage());
+    }
+
     private static Product createProduct() {
-        Product product = new Product(327, 7, 0);
+        Product product = new Product(327, 7, 0, null);
         return product;
     }
 
