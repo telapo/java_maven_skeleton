@@ -76,6 +76,15 @@ public class OrderingTest {
         assertEquals(0.0, order.total(), 0);
     }
 
+    @Test
+    void orderTotaOfOrderWithOneItem() throws InsufficientStockException {
+        Product product = new Product(327, 7, 0, null);
+        Order order = createEmptyOrder();
+
+        order.add(product, 1);
+
+        assertEquals(159.95, order.total(), 0);
+    }
     private static Product createProduct() {
         Product product = new Product(327, 7, 0, null);
         return product;
