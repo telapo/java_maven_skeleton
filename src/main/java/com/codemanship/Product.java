@@ -2,7 +2,7 @@ package com.codemanship;
 
 public class Product {
     private final int inStock;
-    private final int onHold;
+    private int onHold;
 
     public Product(int id, int inStock, int onHold, String description) {
         this.inStock = inStock;
@@ -10,7 +10,7 @@ public class Product {
     }
 
     public int onHoldQuantity() {
-        return 1;
+        return onHold;
     }
 
     public int id() {
@@ -27,5 +27,13 @@ public class Product {
 
     public int available() {
         return inStock - onHold;
+    }
+
+    public void increaseOnHoldQuantity(int quantity) {
+        onHold = onHold + quantity;
+    }
+
+    public void decreaseOnHoldQuantity(int quantity) {
+        onHold = onHold - quantity;
     }
 }

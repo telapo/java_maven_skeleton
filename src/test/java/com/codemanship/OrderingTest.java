@@ -2,10 +2,10 @@ package com.codemanship;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderingTest {
 
@@ -41,7 +41,7 @@ public class OrderingTest {
     }
 
     @Test
-    void addingItemWithInsufficientStockDueToHold() throws InsufficientStockException {
+    void addingItemWithInsufficientStockDueToHold() {
 
         Product product = new Product(327, 2, 1, "Ibanez Tube Screamer");
         Order order = createEmptyOrder();
@@ -50,13 +50,33 @@ public class OrderingTest {
         assertEquals("Insufficient stock of Ibanez Tube Screamer. Only 1 currently available.", ex.getMessage());
     }
 
+    @Test
+    void removeItemPlacedOnHold() throws InsufficientStockException {
+        Product product = new Product(327, 7, 0, null);
+        Order order = createEmptyOrder();
+        order.add(product, 2);
+        order.remove(product, 2);
+
+        assertEquals(0, product.onHoldQuantity());
+    }
+
+    @Test
+    void removeItemFromOrder() throws InsufficientStockException {
+        Product product = new Product(327, 7, 0, null);
+        Order order = createEmptyOrder();
+        order.add(product, 2);
+        order.remove(product, 2);
+
+        assertTrue(order.items().isEmpty());
+    }
+
     private static Product createProduct() {
         Product product = new Product(327, 7, 0, null);
         return product;
     }
 
     private static Order createEmptyOrder() {
-        Order order = new Order(List.of());
+        Order order = new Order(new ArrayList<>());
         return order;
     }
 }
