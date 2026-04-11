@@ -26,4 +26,8 @@ public class Order {
         product.decreaseOnHoldQuantity(quantity);
         items.removeIf(i -> i.product().equals(product));
     }
+
+    public double total() {
+        return 0;
+    }
 }

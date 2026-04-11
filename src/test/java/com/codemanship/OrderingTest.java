@@ -70,6 +70,12 @@ public class OrderingTest {
         assertTrue(order.items().isEmpty());
     }
 
+    @Test
+    void orderTotalOfEmptyOrderIsZero() {
+        Order order = createEmptyOrder();
+        assertEquals(0.0, order.total(), 0);
+    }
+
     private static Product createProduct() {
         Product product = new Product(327, 7, 0, null);
         return product;
