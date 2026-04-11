@@ -11,8 +11,8 @@ public class Order {
     }
 
     public void add(Product product, int quantity) throws InsufficientStockException {
-        if(quantity > product.inStock()){
-            String message = "Insufficient stock of " + product.description() + ". Only " + product.inStock() + " currently available.";
+        if(quantity > product.available()){
+            String message = "Insufficient stock of " + product.description() + ". Only " + product.available() + " currently available.";
             throw new InsufficientStockException(message);
         }
     }

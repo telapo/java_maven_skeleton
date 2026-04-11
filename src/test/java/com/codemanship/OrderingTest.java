@@ -40,6 +40,16 @@ public class OrderingTest {
         assertEquals("Insufficient stock of Ibanez Tube Screamer. Only 1 currently available.", ex.getMessage());
     }
 
+    @Test
+    void addingItemWithInsufficientStockDueToHold() throws InsufficientStockException {
+
+        Product product = new Product(327, 2, 1, "Ibanez Tube Screamer");
+        Order order = createEmptyOrder();
+
+        InsufficientStockException ex = assertThrows(InsufficientStockException.class, () -> order.add(product, 2));
+        assertEquals("Insufficient stock of Ibanez Tube Screamer. Only 1 currently available.", ex.getMessage());
+    }
+
     private static Product createProduct() {
         Product product = new Product(327, 7, 0, null);
         return product;
