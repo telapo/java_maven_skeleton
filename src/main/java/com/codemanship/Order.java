@@ -28,6 +28,6 @@ public class Order {
     }
 
     public double total() {
-        return items.isEmpty() ? 0 : 159.95;
+        return items.isEmpty() ? 0 : items.stream().map(p -> p.product().price()).reduce(Double::sum).get();
     }
 }

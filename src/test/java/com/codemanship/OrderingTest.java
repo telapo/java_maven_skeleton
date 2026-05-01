@@ -3,7 +3,6 @@ package com.codemanship;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,8 +31,8 @@ public class OrderingTest {
     }
 
     @Test
-    void addingItemWithInsufficientStock(){
-        Product product = new Product(327, 1, 0, "Ibanez Tube Screamer");
+    void addingItemWithInsufficientStock() {
+        Product product = new Product(327, 1, 0, "Ibanez Tube Screamer", 0.0);
         Order order = createEmptyOrder();
 
         InsufficientStockException ex = assertThrows(InsufficientStockException.class, () -> order.add(product, 2));
@@ -42,8 +41,7 @@ public class OrderingTest {
 
     @Test
     void addingItemWithInsufficientStockDueToHold() {
-
-        Product product = new Product(327, 2, 1, "Ibanez Tube Screamer");
+        Product product = new Product(327, 2, 1, "Ibanez Tube Screamer", 0.0);
         Order order = createEmptyOrder();
 
         InsufficientStockException ex = assertThrows(InsufficientStockException.class, () -> order.add(product, 2));
@@ -52,7 +50,7 @@ public class OrderingTest {
 
     @Test
     void removeItemPlacedOnHold() throws InsufficientStockException {
-        Product product = new Product(327, 7, 0, null);
+        Product product = new Product(327, 7, 0, null, 0.0);
         Order order = createEmptyOrder();
         order.add(product, 2);
         order.remove(product, 2);
@@ -62,7 +60,7 @@ public class OrderingTest {
 
     @Test
     void removeItemFromOrder() throws InsufficientStockException {
-        Product product = new Product(327, 7, 0, null);
+        Product product = new Product(327, 7, 0, null, 0.0);
         Order order = createEmptyOrder();
         order.add(product, 2);
         order.remove(product, 2);
@@ -78,20 +76,31 @@ public class OrderingTest {
 
     @Test
     void orderTotaOfOrderWithOneItem() throws InsufficientStockException {
-        Product product = new Product(327, 7, 0, null);
+        Product product = new Product(327, 7, 0, null, 159.95);
         Order order = createEmptyOrder();
 
         order.add(product, 1);
 
         assertEquals(159.95, order.total(), 0);
     }
+
+    @Test
+    void orderTotalWithTwoItems() throws InsufficientStockException {
+        Product productOne = new Product(327, 7, 1, null, 159.95);
+        Product productTwo = new Product(811, 2, 1, null, 1799.0);
+
+        Order order = createEmptyOrder();
+        order.add(productOne, 1);
+        order.add(productTwo, 1);
+
+        assertEquals(1958.95, order.total(), 0);
+    }
+
     private static Product createProduct() {
-        Product product = new Product(327, 7, 0, null);
-        return product;
+        return new Product(327, 7, 0, null, 0.0);
     }
 
     private static Order createEmptyOrder() {
-        Order order = new Order(new ArrayList<>());
-        return order;
+        return new Order(new ArrayList<>());
     }
 }
