@@ -1,7 +1,7 @@
 package com.codemanship;
 
 public class Product {
-    private final int inStock;
+    private int inStock;
     private int onHold;
     private double price;
 
@@ -19,7 +19,7 @@ public class Product {
         return 0;
     }
 
-    public double price(){
+    public double price() {
         return price;
     }
 
@@ -41,5 +41,9 @@ public class Product {
 
     public void decreaseOnHoldQuantity(int quantity) {
         onHold = onHold - quantity;
+    }
+
+    public void decreaseInStockQuantity(int quantity) {
+        inStock = inStock - quantity;
     }
 }

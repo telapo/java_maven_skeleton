@@ -5,6 +5,7 @@ import java.util.List;
 public class Order {
     private final List<Item> items;
     private final String country;
+    private OrderStatus status;
 
     public Order(List<Item> items, String country) {
         this.items = items;
@@ -35,5 +36,17 @@ public class Order {
 
     public double total() {
         return items.isEmpty() ? 0 : items.stream().map(i -> i.product().price() * i.quantity()).reduce(Double::sum).get();
+    }
+
+    public void confirm() {
+        for (Item i : items) {
+            i.product().decreaseOnHoldQuantity(i.quantity());
+            i.product().decreaseInStockQuantity(i.quantity());
+        }
+        status = OrderStatus.CONFIRMED;
+    }
+
+    public OrderStatus status() {
+        return status;
     }
 }

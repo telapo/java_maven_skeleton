@@ -106,6 +106,23 @@ public class OrderingTest {
         assertEquals(319.90, order.total(), 0);
     }
 
+    @Test
+    void confirmOrder() throws InsufficientStockException {
+        Product productOne = new Product(327, 7, 0, null, 159.95);
+        Product productTwo = new Product(811, 2, 0, null, 1799.0);
+
+        Order order = createEmptyOrder();
+        order.add(productOne, 2);
+        order.add(productTwo, 1);
+        order.confirm();
+
+        assertEquals(OrderStatus.CONFIRMED, order.status());
+        assertEquals(5, productOne.inStock());
+        assertEquals(0, productOne.onHoldQuantity());
+        assertEquals(1, productTwo.inStock());
+        assertEquals(0, productOne.onHoldQuantity());
+    }
+
     private static Product createProduct() {
         return new Product(327, 7, 0, null, 0.0);
     }
