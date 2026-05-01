@@ -2,6 +2,8 @@ package com.codemanship;
 
 import java.util.List;
 
+import static com.codemanship.OrderStatus.OPEN;
+
 public class Order {
     private final List<Item> items;
     private final String country;
@@ -10,6 +12,7 @@ public class Order {
     public Order(List<Item> items, String country) {
         this.items = items;
         this.country = country;
+        this.status = OPEN;
     }
 
     public List<Item> items() {
@@ -48,5 +51,12 @@ public class Order {
 
     public OrderStatus status() {
         return status;
+    }
+
+    public void cancel() {
+        for (Item i : items) {
+            i.product().decreaseOnHoldQuantity(i.quantity());
+        }
+        status = OrderStatus.CANCELED;
     }
 }

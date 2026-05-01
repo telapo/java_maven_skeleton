@@ -1,5 +1,7 @@
 package com.codemanship;
 
 public enum OrderStatus {
-    CONFIRMED
+    CONFIRMED,
+    OPEN,
+    CANCELED
 }
