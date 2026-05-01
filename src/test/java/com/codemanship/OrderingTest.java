@@ -96,6 +96,16 @@ public class OrderingTest {
         assertEquals(1958.95, order.total(), 0);
     }
 
+    @Test
+    void orderTotalWithQtyMoreThanOne() throws InsufficientStockException {
+        Product productOne = new Product(327, 7, 2, null, 159.95);
+
+        Order order = createEmptyOrder();
+        order.add(productOne, 2);
+
+        assertEquals(319.90, order.total(), 0);
+    }
+
     private static Product createProduct() {
         return new Product(327, 7, 0, null, 0.0);
     }

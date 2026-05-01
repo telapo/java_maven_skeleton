@@ -14,7 +14,7 @@ public class Order {
     }
 
     public void add(Product product, int quantity) throws InsufficientStockException {
-        if(quantity > product.available()){
+        if (quantity > product.available()) {
             String message = "Insufficient stock of " + product.description() + ". Only " + product.available() + " currently available.";
             throw new InsufficientStockException(message);
         }
@@ -28,6 +28,6 @@ public class Order {
     }
 
     public double total() {
-        return items.isEmpty() ? 0 : items.stream().map(p -> p.product().price()).reduce(Double::sum).get();
+        return items.isEmpty() ? 0 : items.stream().map(i -> i.product().price() * i.quantity()).reduce(Double::sum).get();
     }
 }
