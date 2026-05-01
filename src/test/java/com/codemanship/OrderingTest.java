@@ -111,6 +111,6 @@ public class OrderingTest {
     }
 
     private static Order createEmptyOrder() {
-        return new Order(new ArrayList<>());
+        return new Order(new ArrayList<>(), "UK");
     }
 }

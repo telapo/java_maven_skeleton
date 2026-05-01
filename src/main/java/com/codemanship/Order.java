@@ -4,13 +4,19 @@ import java.util.List;
 
 public class Order {
     private final List<Item> items;
+    private final String country;
 
-    public Order(List<Item> items) {
+    public Order(List<Item> items, String country) {
         this.items = items;
+        this.country = country;
     }
 
     public List<Item> items() {
         return items;
+    }
+
+    public String country() {
+        return country;
     }
 
     public void add(Product product, int quantity) throws InsufficientStockException {
